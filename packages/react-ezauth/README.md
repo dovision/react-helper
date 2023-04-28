@@ -18,17 +18,26 @@ const reactEzAuth = require('react-ezauth');
 import "@w2solutions/react-ezauth"
 
 declare module "@w2solutions/react-ezauth" {
+  export enum UserRole {
+    ADMIN = 'Admin',
+    USER = 'User',
+    DEV = 'Dev'
+  }
+  
   export interface DefaultUser {
     id: string;
     username: string;
-    roles: DefaultUserRole[];
+    roles: UserRole[];
     // ...
   }
-
-  export enum DefaultUserRole {
-    ADMIN = 'Admin',
-    DEVELOPER = 'Developer',
-    USER = 'User',
+  
+  export declare const useEzAuthUserHasRoles: (roles: UserRole | UserRole[]) => boolean;
+  export interface EzAuthRequiredProps {
+    fallback?: React.ReactNode;
+    roles?: UserRole | UserRole[];
+    children: React.ReactNode;
+    className?: string;
+    style?: CSSProperties;
   }
 }
 

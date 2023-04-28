@@ -1,7 +1,7 @@
-import { DefaultUser } from ".";
+import {User} from ".";
 
 export interface EzAuthState {
   initialized: boolean;
   authenticated: boolean;
-  user: DefaultUser | null;
+  user: User | null;
 }
