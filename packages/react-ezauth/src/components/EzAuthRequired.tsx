@@ -1,10 +1,10 @@
 import React, { CSSProperties } from 'react';
-import { useEzAuth, DefaultUserRole } from '..';
+import { useEzAuth } from '..';
 import { useEzAuthUserHasRoles } from '../hooks';
 
-interface EzAuthRequiredProps {
+export interface EzAuthRequiredProps {
   fallback?: React.ReactNode;
-  roles?: DefaultUserRole | DefaultUserRole[]
+  roles?: string | string[]
   children: React.ReactNode;
   className?: string;
   style?: CSSProperties;

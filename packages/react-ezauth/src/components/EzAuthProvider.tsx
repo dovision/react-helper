@@ -1,7 +1,7 @@
 import React, { useReducer, useRef, useEffect, useCallback } from 'react'
 
 ;
-import { InitFn, SignInFn, SignOutFn, EzAuthContextType, EzAuthContext } from '../EzAuthContext';
+import {InitFn, SignInFn, SignOutFn, EzAuthContextType, EzAuthContext, ForgotPasswordFn} from '../EzAuthContext';
 import ezAuthReducer from '../store/reducer';
 import { initialize, setUser, reset } from '../store/actions';
 import { emitAuthEvent } from '../events/EventHub';
@@ -11,6 +11,7 @@ interface EzAuthProviderProps {
   init?: InitFn;
   signIn?: SignInFn;
   signOut?: SignOutFn;
+  forgotPassword?: ForgotPasswordFn;
 }
 
 
@@ -54,8 +55,17 @@ export const EzAuthProvider: React.FC<EzAuthProviderProps> = (props) => {
     emitAuthEvent({ type: EzAuthEventType.SIGNED_OUT })
   }, [props.signOut, dispatch]);
 
+  const forgotPassword = useCallback(
+      async (username: string) => {
+        const fn = props.forgotPassword || (() => null)
+        await fn(username)
+        emitAuthEvent({ type: EzAuthEventType.PASSWORD_RESET })
+      },
+      [props.forgotPassword]
+  )
+
   return (
-    <EzAuthContext.Provider value={{ state, signIn, signOut }}>
+    <EzAuthContext.Provider value={{ state, signIn, signOut, forgotPassword }}>
       {props.children}
     </EzAuthContext.Provider>
   );

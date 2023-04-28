@@ -7,10 +7,6 @@ export * from './types'
 
 export interface DefaultUser {
   id: string;
-  roles?: DefaultUserRole[];
+  roles?: string[];
 }
-
-export enum DefaultUserRole {
-  ADMIN = 'Admin',
-  USER = 'User',
-}
+export type User = DefaultUser
